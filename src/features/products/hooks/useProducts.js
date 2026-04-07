@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 
+
 function useProducts() {
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -25,6 +26,7 @@ function useProducts() {
           { id: 3, name: "Headphones", price: 3000 },
           { id: 4, name: "Tablet", price: 20000 },
         ];
+        
 
         console.log("Data fetched:", data);
 

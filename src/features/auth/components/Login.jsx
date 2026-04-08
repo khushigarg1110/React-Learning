@@ -1,9 +1,13 @@
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useDispatch } from "react-redux";
+import { login } from "../authSlice";
 import { loginSchema } from "../schemas/authSchema";
 import "./Auth.css";
 
-function Login({ setIsAuthenticated }) {
+function Login() {
+  const dispatch = useDispatch();
+
   const {
     register,
     handleSubmit,
@@ -14,7 +18,9 @@ function Login({ setIsAuthenticated }) {
 
   function onSubmit(data) {
     console.log("Login Data:", data);
-    setIsAuthenticated(true); // simulate login
+
+    // ✅ Redux login
+    dispatch(login(data));
   }
 
   return (

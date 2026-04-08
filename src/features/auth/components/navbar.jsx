@@ -1,23 +1,30 @@
-import { useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
+import { logout } from "../authSlice";
 
-function Navbar() {
-  const items = useSelector(state => state.cart.items);
+function Navbar({ onCartClick }) {
+  const dispatch = useDispatch();
 
-  const totalItems = items.reduce(
-    (sum, item) => sum + item.quantity,
-    0
-  );
+  const handleLogout = () => {
+    dispatch(logout());
+  };
 
   return (
     <div style={{
       display: "flex",
       justifyContent: "space-between",
-      padding: "15px",
+      padding: "10px 20px",
       background: "#222",
-      color: "white"
+      color: "#fff"
     }}>
+      
       <h2>My Store</h2>
-      <h3>🛒 {totalItems}</h3>
+
+      <div style={{ display: "flex", gap: "10px" }}>
+        <button onClick={onCartClick}>Cart</button>
+
+        {/* 🔐 Logout Button */}
+        <button onClick={handleLogout}>Logout</button>
+      </div>
     </div>
   );
 }

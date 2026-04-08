@@ -1,46 +1,37 @@
-import { useState, useEffect } from "react";
+// React Query hook for fetching products with caching & retry
+import { useQuery } from "@tanstack/react-query";
 
 
 function useProducts() {
-  const [products, setProducts] = useState([]);
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    console.log("useEffect running...");
-
-    // 1. Check cache
-    const cachedProducts = localStorage.getItem("products");
-
-    if (cachedProducts) {
-      console.log("Using cached data");
-      setProducts(JSON.parse(cachedProducts));
-      setLoading(false);
-    } else {
-      console.log("Fetching data from API...");
-
-      // simulate API call
+  const fetchProducts = async () => {
+    
+    console.log("API CALLED");
+    return new Promise((resolve) => {
       setTimeout(() => {
-        const data = [
+        resolve([
           { id: 1, name: "iPhone", price: 80000 },
           { id: 2, name: "Laptop", price: 60000 },
           { id: 3, name: "Headphones", price: 3000 },
           { id: 4, name: "Tablet", price: 20000 },
-        ];
-        
-
-        console.log("Data fetched:", data);
-
-        setProducts(data);
-
-        // 2. Save to cache
-        localStorage.setItem("products", JSON.stringify(data));
-
-        setLoading(false);
+        ]);
       }, 1000);
-    }
-  }, []);
+    });
 
-  return { products, loading };
+  };
+
+
+  const { data, isLoading, error } = useQuery({
+    queryKey: ["products"],        // unique key for caching
+    queryFn: fetchProducts,        // API function
+    retry: 2,                      // retry 2 times if fails
+    staleTime: 60000,              // 1 minute cache freshness
+  });
+
+  return {
+    products: data || [],
+    loading: isLoading,
+    error,
+  };
 }
 
 export default useProducts;

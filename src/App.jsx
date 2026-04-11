@@ -1,75 +1,49 @@
-import { useState } from "react";
+import { Routes, Route, Navigate } from "react-router-dom";
+import LoginPage from "./pages/LoginPage";
+import SignupPage from "./pages/SignupPage";
+import ProductsPage from "./pages/ProductPage";
+import CartPage from "./pages/CartPage";
 import { useSelector } from "react-redux";
-import Login from "./features/auth/components/Login";
-import Signup from "./features/auth/components/Signup";
-import ProductCard from "./features/products/components/ProductCard";
-import useProducts from "./features/products/hooks/useProducts";
-import Cart from "./features/cart/components/Cart";
-import Navbar from "./features/auth/components/navbar";
-import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
+import { ToastContainer } from "react-toastify";
 
+
+// Protected Route Component
+function ProtectedRoute({ children }) {
+  const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
+
+  return isAuthenticated ? children : <Navigate to="/login" />;
+}
 
 function App() {
-  const [isLogin, setIsLogin] = useState(true);
-  const [showCart, setShowCart] = useState(false);
-
-  // ✅ Get auth from Redux
-  const isAuthenticated = useSelector(
-    (state) => state.auth.isAuthenticated
-  );
-
-  const { products, loading } = useProducts();
-
-  // 🔹 If NOT logged in → show auth
-  if (!isAuthenticated) {
-    return (
-      <div>
-        {isLogin ? <Login /> : <Signup />}
-
-        <p style={{ textAlign: "center" }}>
-          {isLogin ? "Don't have an account?" : "Already have an account?"}
-          <button onClick={() => setIsLogin(!isLogin)}>
-            {isLogin ? "Signup" : "Login"}
-          </button>
-        </p>
-      </div>
-    );
-  }
-
-  // 🔹 After login → show app
-  if (loading) return <p>Loading...</p>;
-
   return (
-    <div>
-      <Navbar onCartClick={() => setShowCart(!showCart)} />
+    <>
+    <ToastContainer position="top-right" autoClose={2000} />
+    <Routes>
+      <Route path="/login" element={<LoginPage />} />
+      <Route path="/signup" element={<SignupPage />} />
 
-      <h1 style={{ textAlign: "center" }}>Product Listing</h1>
+      <Route
+        path="/products"
+        element={
+          <ProtectedRoute>
+            <ProductsPage />
+          </ProtectedRoute>
+        }
+      />
 
-      <div
-        style={{
-          display: "flex",
-          gap: "20px",
-          padding: "20px",
-        }}
-      >
-        {/* 🛍️ Products */}
-        <div style={{ flex: 3 }}>
-          <div className="grid">
-            {products.map((product) => (
-              <ProductCard key={product.id} product={product} />
-            ))}
-          </div>
-        </div>
+      <Route
+        path="/cart"
+        element={
+          <ProtectedRoute>
+            <CartPage />
+          </ProtectedRoute>
+        }
+      />
 
-        {/* 🛒 Cart */}
-        <div style={{ flex: 1 }}>
-          <Cart />
-        </div>
-      </div>
-
-      {/* ✅ DevTools (optional but useful) */}
-      <ReactQueryDevtools initialIsOpen={false} />
-    </div>
+      {/* default route */}
+      <Route path="*" element={<Navigate to="/login" />} />
+    </Routes>
+    </>
   );
 }
 

@@ -4,9 +4,12 @@ import { useDispatch } from "react-redux";
 import { login } from "../authSlice";
 import { signupSchema } from "../schemas/authSchema";
 import "./Auth.css";
+import { useNavigate, useNavigation } from "react-router-dom";
+import { toast } from "react-toastify";
 
 function Signup() {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const {
     register,
@@ -21,6 +24,8 @@ function Signup() {
 
     // ✅ Auto-login after signup
     dispatch(login(data));
+    toast.success("User Registration Successful!");
+    navigate("/products")
   }
 
   return (
@@ -42,7 +47,13 @@ function Signup() {
 
         <button type="submit">Signup</button>
       </form>
-    </div>
+      <p style={{ textAlign: "center" }}>
+        Already have an account?{" "}
+        <button onClick={() => navigate("/login")}>
+          Login
+        </button>
+      </p>
+        </div>
   );
 }
 

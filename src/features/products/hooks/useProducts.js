@@ -1,24 +1,15 @@
 // React Query hook for fetching products with caching & retry
 import { useQuery } from "@tanstack/react-query";
+import api from "../../../api/axiosInstance";
 
 
 function useProducts() {
   const fetchProducts = async () => {
     
     console.log("API CALLED");
-    return new Promise((resolve) => {
-      setTimeout(() => {
-        resolve([
-          { id: 1, name: "iPhone", price: 80000 },
-          { id: 2, name: "Laptop", price: 60000 },
-          { id: 3, name: "Headphones", price: 3000 },
-          { id: 4, name: "Tablet", price: 20000 },
-        ]);
-      }, 1000);
-    });
-
+    const res = await api.get("/products");
+    return res.data.products; // return actual data
   };
-
 
   const { data, isLoading, error } = useQuery({
     queryKey: ["products"],        // unique key for caching

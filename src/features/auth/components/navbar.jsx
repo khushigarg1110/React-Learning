@@ -1,11 +1,14 @@
 import { useDispatch } from "react-redux";
 import { logout } from "../authSlice";
+import { useNavigate } from "react-router-dom";
 
 function Navbar({ onCartClick }) {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const handleLogout = () => {
     dispatch(logout());
+    navigate("/login");
   };
 
   return (
@@ -20,7 +23,7 @@ function Navbar({ onCartClick }) {
       <h2>My Store</h2>
 
       <div style={{ display: "flex", gap: "10px" }}>
-        <button onClick={onCartClick}>Cart</button>
+        <button onClick={()=> navigate("/cart")}>Cart</button>
 
         {/* 🔐 Logout Button */}
         <button onClick={handleLogout}>Logout</button>

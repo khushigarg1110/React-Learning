@@ -22,7 +22,7 @@ function Signup() {
   function onSubmit(data) {
     console.log("Signup Data:", data);
 
-    // ✅ Auto-login after signup
+    // Auto-login after signup
     dispatch(login(data));
     toast.success("User Registration Successful!");
     navigate("/products")

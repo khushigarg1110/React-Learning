@@ -1,6 +1,7 @@
 import { useDispatch } from "react-redux";
 import { logout } from "../authSlice";
 import { useNavigate } from "react-router-dom";
+import "./navbar.css";
 
 function Navbar({ onCartClick }) {
   const dispatch = useDispatch();
@@ -12,20 +13,10 @@ function Navbar({ onCartClick }) {
   };
 
   return (
-    <div style={{
-      display: "flex",
-      justifyContent: "space-between",
-      padding: "10px 20px",
-      background: "#222",
-      color: "#fff"
-    }}>
-      
-      <h2>My Store</h2>
-
-      <div style={{ display: "flex", gap: "10px" }}>
-        <button onClick={()=> navigate("/cart")}>Cart</button>
-
-        {/* 🔐 Logout Button */}
+    <div className="navbar">
+      <h1>My Store</h1>
+      <div className="navbar-buttons">
+        <button  aria-label="Open cart" onClick={()=> navigate("/cart")}>Cart</button>
         <button onClick={handleLogout}>Logout</button>
       </div>
     </div>
@@ -33,3 +24,6 @@ function Navbar({ onCartClick }) {
 }
 
 export default Navbar;
+
+
+

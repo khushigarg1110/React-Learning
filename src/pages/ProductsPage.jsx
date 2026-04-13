@@ -1,7 +1,7 @@
 import useProducts from "../features/products/hooks/useProducts";
 import ProductCard from "../features/products/components/ProductCard";
-import Cart from "../features/cart/components/Cart";
-import Navbar from "../features/auth/components/navbar";
+// import Cart from "../features/cart/components/Cart";
+// import Navbar from "../features/auth/components/navbar";
 import { useEffect } from "react";
 import { toast } from "react-toastify";
 
@@ -19,18 +19,20 @@ function ProductsPage() {
 
   return (
     <div>
-      <Navbar />
+      
 
       <h1 style={{ textAlign: "center" }}>Product Listing</h1>
 
       <div style={{ display: "flex", gap: "20px", padding: "20px" }}>
         {/* Products */}
         <div style={{ flex: 3 }}>
+          <main>
           <div className="grid">
-            {products.map((product) => (
-              <ProductCard key={product.id} product={product} />
-            ))}
+            {products.map((product) => {
+              return <ProductCard key={product.id} product={product} />
+            })}
           </div>
+          </main>
         </div>
       </div>
     </div>
@@ -38,3 +40,6 @@ function ProductsPage() {
 }
 
 export default ProductsPage;
+
+
+

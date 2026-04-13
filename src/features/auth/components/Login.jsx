@@ -23,7 +23,7 @@ function Login() {
   function onSubmit(data) {
     console.log("Login Data:", data);
 
-    // ✅ Redux login
+    // Redux login
     dispatch(login(data));
     toast.success("Login Successful!");
     navigate("/products");
@@ -44,7 +44,7 @@ function Login() {
       </form>
       <p style={{ textAlign: "center" }}>
         Don't have an account?{" "}
-        <button onClick={() => navigate("/signup")}>
+        <button onClick={()=>navigate("/signup")}>
           Signup
         </button>
       </p>

@@ -12,14 +12,15 @@ function ProductCard({ product }) {
 
   return (
     <div className="product-card">
-      <h3 className="product-title">{product.title}</h3>
-      <img src={product.thumbnail} alt={product.title} className = "product-image"/>
+      <h2 className="product-title">{product.title}</h2>
+      <img src={product.thumbnail} alt={product.title} loading="lazy" className = "product-image"/>
 
       <p className="product-price">₹{product.price}</p>
 
       <button
         className="add-btn"
         onClick={handleAddToCart}
+        aria-label={`Add ${product.title} to cart`}
       >
         Add to Cart
       </button>

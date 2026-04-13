@@ -7,6 +7,10 @@
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
   text-align: center;
   transition: transform 0.2s ease, box-shadow 0.2s ease;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between; 
+  min-height: 300px;
 }
 
 /* Hover effect */
@@ -30,19 +34,21 @@
 
 /* Button */
 .add-btn {
-  background: #007bff;
-  color: white;
+  background-color: #0056b3; 
+  color: #ffffff;
   border: none;
   padding: 8px 14px;
   border-radius: 6px;
   cursor: pointer;
   transition: background 0.2s ease;
+  margin-top: auto;
 }
 
 .product-image {
   width: 100%;
-  height: 150px;
-  object-fit: contain;
+  max-width: 100%;
+  height: 200px;      
+  object-fit: cover;
 }
 
 

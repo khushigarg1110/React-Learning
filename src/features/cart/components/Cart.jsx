@@ -26,7 +26,7 @@ function Cart() {
           </div>
 
           <div className="item-actions">
-            <button
+            <button 
               className="btn"
               onClick={() =>
                 dispatch(updateQuantity({
